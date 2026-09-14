@@ -6,14 +6,16 @@ CPP=$(PICO_TOOLCHAIN_PATH)/bin/arm-none-eabi-cpp
 CC=$(PICO_TOOLCHAIN_PATH)/bin/arm-none-eabi-gcc
 AS=$(PICO_TOOLCHAIN_PATH)/bin/arm-none-eabi-as
 
-main.s: main.i
-	$(CC) -S $< -o $@
 
 main.i: main.c
 	$(CPP) $< > $@
 
+
+main.s: main.i
+	$(CC) -S $< -o $@
+
 main.o: main.s
-    $(AS) $< -o $@
+	$(AS) $< -o $@
 
 %.o: %.s
 	$(AS) $< -o $@
@@ -23,4 +25,4 @@ main.o: main.s
 .PHONY: clean
 
 clean:
-	rm -f main.i hello.txt
+	rm -f main.o main.i main.s #rm -f main.i hello.txt 
